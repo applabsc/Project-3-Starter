@@ -1,21 +1,45 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
-}
+import LoginScreen from './screens/LoginScreen';
+import WeatherScreen from './screens/WeatherScreen';
+import ToDoList from './screens/ToDoList';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default createStackNavigator(
+    {
+        LoginScreen: LoginScreen,
+        MainScreen: createBottomTabNavigator({
+            WeatherScreen: {
+                screen: WeatherScreen,
+                navigationOptions: {
+                    tabBarIcon: () => (
+                        <Icon
+                            name='sun'
+                            type='feather'
+                            color='#517fa4'
+                            size={24}
+                        />
+                    ),
+                }
+            },
+            ToDoList: {
+                screen: ToDoList,
+                navigationOptions: {
+                    tabBarIcon: () => (
+                        <Icon
+                            name='ios-list'
+                            type='ionicon'
+                            color='#000000'
+                            size={40}
+                            style={{ marginBottom: 10 }}
+                        />
+                    ),
+                }
+            },
+        }),
+    },
+    {
+        initialRouteName: 'LoginScreen',
+    }
+);
